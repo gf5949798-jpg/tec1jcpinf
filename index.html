@@ -1,0 +1,3803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuaderno de Comunicado</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(4,16,30,.96),rgba(4,16,30,.96)),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 34px,
+            rgba(0,150,255,.035) 35px
+        );
+    color:#eaf5ff;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(
+            90deg,
+            transparent 49.8%,
+            rgba(0,150,255,.025) 50%,
+            transparent 50.2%
+        );
+}
+
+header{
+    background:#081725;
+    border-bottom:1px solid #174563;
+    padding:18px 30px;
+}
+
+.header-contenido{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+}
+
+.logo h1{
+    font-size:22px;
+    letter-spacing:2px;
+}
+
+.logo p{
+    color:#7290a8;
+    font-size:11px;
+    margin-top:5px;
+    letter-spacing:1px;
+}
+
+.contenedor{
+    width:94%;
+    max-width:1200px;
+    margin:30px auto;
+}
+
+.pantalla{
+    display:none;
+}
+
+.pantalla.activa{
+    display:block;
+    animation:entrada .2s ease;
+}
+
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.tarjeta{
+    background:#0c1b2b;
+    border:1px solid #1c425e;
+    border-radius:8px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+.tarjeta h2{
+    margin-bottom:12px;
+}
+
+.tarjeta p{
+    color:#91a9bd;
+}
+
+.etiqueta{
+    color:#00bfff;
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.codigo{
+    color:#55728a;
+    font-family:monospace;
+    font-size:11px;
+}
+
+.centrado{
+    text-align:center;
+}
+
+/* BOTONES */
+
+button{
+    border:1px solid #275572;
+    background:#102a40;
+    color:#eaf5ff;
+    padding:11px 16px;
+    border-radius:5px;
+    cursor:pointer;
+    margin:5px;
+    font-weight:bold;
+    transition:.2s;
+}
+
+button:hover{
+    background:#15415f;
+    border-color:#00a8ff;
+    transform:translateY(-1px);
+}
+
+.btn-principal{
+    background:#075985;
+    border-color:#00a8ff;
+}
+
+.btn-verde{
+    background:#075438;
+    border-color:#00c879;
+}
+
+.btn-rojo{
+    background:#571d2b;
+    border-color:#e33c59;
+}
+
+.btn-volver{
+    background:#17293b;
+    border:2px solid #4b7898;
+    color:#ffffff;
+    font-size:14px;
+    padding:12px 20px;
+    margin:0 0 18px 0;
+}
+
+.btn-volver:hover{
+    background:#20506f;
+    border-color:#00bfff;
+}
+
+/* MENU */
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.menu button{
+    min-height:125px;
+}
+
+.menu-icono{
+    display:block;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.menu-codigo{
+    display:block;
+    color:#58758c;
+    font-size:10px;
+    margin-top:8px;
+}
+
+/* INPUTS */
+
+input,
+select,
+textarea{
+    width:100%;
+    background:#081521;
+    color:white;
+    border:1px solid #28506a;
+    border-radius:5px;
+    padding:12px;
+    margin:6px 0;
+    outline:none;
+}
+
+select{
+    cursor:pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:#00a8ff;
+}
+
+textarea{
+    min-height:180px;
+    resize:vertical;
+}
+
+/* LOGIN */
+
+.login-card{
+    max-width:520px;
+    margin:25px auto;
+}
+
+.login-icono{
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+/* SELECTOR ROL */
+
+.selector-rol{
+    position:relative;
+    display:flex;
+    background:#07131f;
+    border:1px solid #24445b;
+    padding:4px;
+    border-radius:6px;
+    margin:15px 0;
+}
+
+.selector-rol .fondo{
+    position:absolute;
+    left:4px;
+    top:4px;
+    width:50%;
+    height:calc(100% - 8px);
+    background:#075985;
+    border:1px solid #00a8ff;
+    border-radius:4px;
+    transition:.25s;
+}
+
+.selector-rol.preceptor .fondo{
+    left:50%;
+}
+
+.selector-rol button{
+    position:relative;
+    z-index:2;
+    width:50%;
+    margin:0;
+    border:0;
+    background:transparent;
+    color:#718ba0;
+}
+
+.selector-rol button.activo{
+    color:white;
+}
+
+/* MESES */
+
+.grid-meses{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.mes{
+    position:relative;
+    background:#0c2134;
+    border:1px solid #24506b;
+    border-radius:6px;
+    padding:20px 10px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.mes:hover{
+    border-color:#00a8ff;
+    background:#10304a;
+}
+
+.mes-numero{
+    display:block;
+    color:#52748c;
+    font-family:monospace;
+    font-size:10px;
+    margin-bottom:6px;
+}
+
+/* PUNTOS ROJOS */
+
+.punto-rojo{
+    position:absolute;
+    width:10px;
+    height:10px;
+    right:9px;
+    top:9px;
+    border-radius:50%;
+    background:#ff304f;
+    box-shadow:0 0 9px rgba(255,48,79,.8);
+}
+
+/* DIAS */
+
+.grid-dias{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.dia{
+    position:relative;
+    padding:17px 5px;
+    text-align:center;
+    background:#0c2134;
+    border:1px solid #24506b;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.dia:hover{
+    border-color:#00a8ff;
+    background:#10304a;
+}
+
+.dia .punto-rojo{
+    width:8px;
+    height:8px;
+    right:5px;
+    top:5px;
+}
+
+/* COMUNICADOS RECIENTES DESPLEGABLE */
+
+.desplegable-comunicados{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    padding:15px 18px;
+    background:#0b2134;
+    border:1px solid #28536d;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.desplegable-comunicados:hover{
+    background:#10304a;
+    border-color:#00a8ff;
+}
+
+.desplegable-comunicados strong{
+    font-size:14px;
+    letter-spacing:.5px;
+}
+
+.icono-desplegable{
+    margin-right:9px;
+}
+
+.contenido-desplegable{
+    display:none;
+    margin-top:10px;
+    padding-top:5px;
+}
+
+.contenido-desplegable.abierto{
+    display:block;
+}
+
+.flecha-desplegable{
+    color:#00bfff;
+    font-size:13px;
+    transition:.2s;
+}
+
+.flecha-desplegable.abierta{
+    transform:rotate(180deg);
+}
+
+/* ULTIMOS */
+
+.log-cabecera{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #214157;
+    padding-bottom:10px;
+    margin-bottom:12px;
+    color:#66849a;
+    font-size:10px;
+    font-family:monospace;
+}
+
+.comunicado-mini{
+    background:#091a29;
+    border:1px solid #20445e;
+    border-left:3px solid #00a8ff;
+    padding:13px;
+    margin:8px 0;
+    border-radius:4px;
+}
+
+.comunicado-mini .fecha{
+    color:#d6e8f5;
+    font-weight:bold;
+}
+
+.comunicado-mini .hora{
+    color:#628198;
+    font-family:monospace;
+    margin-top:4px;
+}
+
+.comunicado-mini .texto{
+    margin:8px 0;
+    color:#dbe8f1;
+}
+
+.nuevo{
+    display:inline-block;
+    background:#541928;
+    border:1px solid #ff304f;
+    color:#ff7085;
+    font-size:9px;
+    padding:3px 6px;
+    border-radius:3px;
+    margin-left:7px;
+}
+
+/* INFORMACIÓN */
+
+.info-bar{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.info-box{
+    background:#091a29;
+    border:1px solid #20445e;
+    border-radius:5px;
+    padding:11px;
+}
+
+.info-box span{
+    display:block;
+    color:#5d7b91;
+    font-size:9px;
+    margin-bottom:5px;
+}
+
+.info-box strong{
+    color:#d8e8f4;
+}
+
+/* ESTUDIANTES */
+
+.lista-estudiantes{
+    display:grid;
+    gap:10px;
+}
+
+.estudiante-item{
+    background:#091a29;
+    border:1px solid #20445e;
+    border-radius:5px;
+    padding:15px;
+}
+
+.password-tecnico{
+    display:inline-block;
+    background:#07131e;
+    border:1px solid #1e3a4e;
+    padding:5px 8px;
+    margin-top:7px;
+    color:#77a4c0;
+    font-family:monospace;
+    font-size:11px;
+}
+
+/* HOJA DE COMUNICADO */
+
+.hojas{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding:8px 0 15px;
+}
+
+.hoja-tab{
+    min-width:95px;
+    background:#162a3d;
+    border:1px solid #35566e;
+    color:#9db4c6;
+}
+
+.hoja-tab.activa{
+    background:#0b6795;
+    border-color:#00bfff;
+    color:white;
+}
+
+.hoja-tab.nueva{
+    background:#075438;
+    border-color:#00c879;
+    color:white;
+}
+
+.hoja-contenido{
+    background:#f5f2e9;
+    color:#202020;
+    border:1px solid #bbb5a8;
+    border-radius:3px;
+    padding:35px;
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.35),
+        inset 0 0 30px rgba(120,100,70,.05);
+    min-height:430px;
+}
+
+.hoja-titulo{
+    text-align:center;
+    color:#1e1e1e;
+    font-size:21px;
+    margin-bottom:8px;
+}
+
+.hoja-subtitulo{
+    text-align:center;
+    color:#555;
+    font-size:12px;
+    margin-bottom:25px;
+}
+
+.hoja-datos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.dato-hoja{
+    border-bottom:1px solid #777;
+    padding:8px 3px;
+    color:#333;
+}
+
+.dato-hoja strong{
+    color:#111;
+}
+
+.hoja-escritura{
+    min-height:150px;
+    padding:18px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 30px,
+            #c7d5dc 31px
+        );
+    line-height:31px;
+    color:#202020;
+    white-space:pre-wrap;
+}
+
+.hoja-editor{
+    background:white;
+    color:#222;
+    border:1px solid #aaa;
+    width:100%;
+    min-height:180px;
+    padding:15px;
+    line-height:28px;
+    font-family:Arial, Helvetica, sans-serif;
+    resize:vertical;
+    display:block;
+    cursor:text;
+}
+
+.hoja-editor:focus{
+    background:#ffffff;
+    color:#111111;
+    border-color:#075985;
+    outline:2px solid rgba(0,168,255,.15);
+}
+
+.firmas{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-top:35px;
+}
+
+.firma{
+    text-align:center;
+    color:#333;
+    padding-top:25px;
+    border-top:1px solid #555;
+}
+
+.firma small{
+    display:block;
+    margin-top:5px;
+    color:#666;
+}
+
+.firmado{
+    color:#08753e;
+    font-weight:bold;
+}
+
+.pendiente{
+    color:#a62c35;
+    font-weight:bold;
+}
+
+.hoja-fecha{
+    text-align:right;
+    color:#555;
+    font-size:12px;
+    margin-bottom:15px;
+      margin-bottom:15px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+    .menu{
+        grid-template-columns:1fr;
+    }
+
+    .grid-meses{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid-dias{
+        grid-template-columns:repeat(5,1fr);
+    }
+
+    .info-bar{
+        grid-template-columns:1fr;
+    }
+
+    .hoja-datos,
+    .firmas{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
+}
+
+@media(max-width:500px){
+
+    .contenedor{
+        width:95%;
+    }
+
+    .tarjeta{
+        padding:17px;
+    }
+
+    .grid-dias{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .hoja-contenido{
+        padding:20px;
+    }
+}
+
+/* Decoración restaurada y limitada a la página principal y encabezado */
+header{position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 0%,rgba(0,164,255,.22),transparent 42%),linear-gradient(115deg,#061326,#092b57 55%,#061326);border-bottom:2px solid #0799f2;}
+header:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,#29d5ff,#547bff,transparent);}
+#inicio .tarjeta{position:relative;isolation:isolate;overflow:hidden;padding:clamp(24px,4vw,44px);border:1px solid #087fc0;border-radius:18px;background:radial-gradient(ellipse at 8% 0%,rgba(0,153,255,.2),transparent 42%),radial-gradient(ellipse at 100% 100%,rgba(64,91,255,.16),transparent 40%),linear-gradient(145deg,#0b2038,#071525 75%);box-shadow:0 15px 45px rgba(0,0,0,.35),inset 0 0 30px rgba(0,120,255,.06);}
+#inicio .tarjeta:before,#inicio .tarjeta:after{content:"";position:absolute;z-index:-1;pointer-events:none;border:1px solid rgba(0,174,255,.25);border-radius:50%;}
+#inicio .tarjeta:before{width:270px;height:270px;top:-155px;right:-75px;box-shadow:0 0 0 18px rgba(0,174,255,.04),0 0 0 38px rgba(0,174,255,.025);}
+#inicio .tarjeta:after{width:190px;height:190px;bottom:-130px;left:-65px;box-shadow:0 0 0 16px rgba(0,174,255,.04),0 0 0 34px rgba(0,174,255,.025);}
+#inicio .etiqueta{display:inline-block;padding:7px 14px;border:1px solid #087fc0;border-radius:30px;color:#7bdcff;background:rgba(0,130,220,.12);}
+#inicio h2{color:#f2f8ff;font-size:clamp(26px,4vw,38px);text-shadow:0 0 20px rgba(0,153,255,.25);margin:12px 0;}
+#inicio p{position:relative;line-height:1.8;max-width:850px;margin-left:auto;margin-right:auto;}
+#inicio .menu{position:relative;gap:16px;margin-top:28px;}
+#inicio .menu button{border:1px solid #087fc0;border-radius:13px;background:linear-gradient(145deg,#0b2b50,#071a30);box-shadow:inset 0 1px rgba(255,255,255,.04),0 8px 18px rgba(0,0,0,.18);transition:transform .2s,border-color .2s,box-shadow .2s;}
+#inicio .menu button:hover{transform:translateY(-4px);border-color:#4bdcff;box-shadow:0 10px 28px rgba(0,153,255,.2);}
+#inicio .menu-icono{filter:drop-shadow(0 0 8px rgba(0,183,255,.4));}
+@media(max-width:600px){#inicio .tarjeta{padding:22px 16px;border-radius:14px;}#inicio .menu{gap:12px;}}
+
+
+/* Campos Gmail: agregado sin modificar las decoraciones existentes */
+.gmail-field{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    margin:10px 0;
+}
+.gmail-field input{
+    flex:1;
+    min-width:0;
+}
+.gmail-help{
+    width:25px;
+    height:25px;
+    min-width:25px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.75);
+    background:rgba(255,255,255,.12);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+}
+
+
+/* Escudo escolar: añadido sin alterar las decoraciones preexistentes */
+.header-contenido{display:flex;align-items:center;justify-content:center}
+.logo-escuela{display:flex;align-items:center;justify-content:center;gap:18px}
+.escudo-marco{position:relative;flex:0 0 auto;width:104px;height:104px;padding:7px;border-radius:50%;
+background:conic-gradient(from 20deg,#d9f7ff,#49bde8,#147bb7,#a8eaff,#d9f7ff);
+box-shadow:0 0 10px rgba(80,202,245,.42),0 0 22px rgba(80,202,245,.20)}
+.escudo-marco:before{content:"";position:absolute;inset:-5px;border:1px dashed rgba(130,220,255,.85);border-radius:50%;pointer-events:none}
+.escudo-marco:after{content:"✦";position:absolute;top:-8px;right:1px;color:#dffaff;font-size:17px;text-shadow:0 0 7px #55d7ff,0 0 13px #55d7ff}
+.logo-escuela img{display:block;width:100%;height:100%;object-fit:contain;border-radius:50%;background:#fff}
+@media(max-width:600px){.logo-escuela{gap:11px}.escudo-marco{width:76px;height:76px;padding:5px}
+.logo-escuela h1{font-size:clamp(17px,4.5vw,24px)}.logo-escuela p{font-size:clamp(9px,2.5vw,12px)}}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-contenido">
+        <div class="logo logo-escuela">
+                          <div class="escudo-marco">
+                <img src="escudo.png" alt="Escudo de la escuela">
+            </div>
+            <div>
+                <h1>CUADERNO DE COMUNICADO</h1>
+                <p>SISTEMA DIGITAL DE COMUNICACIÓN ESCOLAR</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="contenedor">
+
+<!-- INICIO -->
+
+<section id="inicio" class="pantalla activa">
+
+<div class="tarjeta centrado">
+
+    <div class="etiqueta">INICIO</div>
+
+    <h2>Cuaderno de Comunicado</h2>
+
+    <p>
+        Seleccioná el tipo de usuario para ingresar.
+    </p>
+
+    <p style="margin-top:15px;">
+        Bienvenido a la página comunicativa de la Escuela Secundaria E.E.S.T. N.º 1.
+        Aquí podrás consultar los comunicados de una manera más sencilla y mantener
+        una comunicación directa con los estudiantes, sin necesidad de utilizar el
+        cuaderno de comunicación.
+    </p>
+
+    <div class="menu">
+
+        <button onclick="mostrar('accesoEstudiante')">
+            <span class="menu-icono">👨‍🎓</span>
+            ENTRAR COMO ESTUDIANTE
+            <span class="menu-codigo">USER_STUDENT</span>
+        </button>
+
+        <button onclick="mostrar('accesoTutor')">
+            <span class="menu-icono">👨‍👩‍👦</span>
+            PADRE / TUTOR
+            <span class="menu-codigo">USER_TUTOR</span>
+        </button>
+
+        <button onclick="mostrar('accesoProfesor')">
+            <span class="menu-icono">👨‍🏫</span>
+            PROFESOR / PRECEPTOR
+            <span class="menu-codigo">STAFF</span>
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ACCESO ESTUDIANTE -->
+
+<section id="accesoEstudiante" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver" onclick="mostrar('inicio')">
+        ← VOLVER AL INICIO
+    </button>
+
+    <div class="etiqueta">ESTUDIANTE</div>
+
+    <h2>Acceso del estudiante</h2>
+
+    <button class="btn-principal"
+            onclick="mostrar('registroEstudiante')">
+        + REGISTRARME
+    </button>
+
+    <button onclick="mostrar('loginEstudiantePantalla')">
+        INICIAR SESIÓN
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- REGISTRO ESTUDIANTE -->
+
+<section id="registroEstudiante" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver"
+            onclick="mostrar('accesoEstudiante')">
+        ← VOLVER
+    </button>
+
+    <div class="etiqueta">REGISTRO / ESTUDIANTE</div>
+
+    <h2>Crear usuario</h2>
+
+    <input id="nombreEstudiante"
+           placeholder="Nombre y apellido">
+
+    <select id="cursoEstudiante">
+        <option value="">Seleccioná tu curso</option>
+        <option>1°1</option>
+        <option>1°2</option>
+        <option>1°3</option>
+        <option>1°4</option>
+        <option>1°5</option>
+        <option>1°6</option>
+        <option>1°7</option>
+    </select>
+
+    <div class="gmail-field">
+        <input id="gmailEstudiante" type="email" placeholder="Tu Gmail (@gmail.com)" autocomplete="email">
+        <button type="button" class="gmail-help" aria-label="Ayuda sobre Gmail" title="Ayuda" onclick="alert('Ingresá tu dirección de Gmail para recibir avisos cuando un profesor o preceptor te envíe un comunicado, sin necesidad de entrar constantemente a la página')">?</button>
+    </div>
+
+    <input id="passwordEstudiante"
+           type="password"
+           placeholder="Elegí una contraseña">
+
+    <input id="passwordEstudiante2"
+           type="password"
+           placeholder="Repetí la contraseña">
+
+    <button class="btn-principal"
+            onclick="registrarEstudiante()">
+        CREAR USUARIO
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- LOGIN ESTUDIANTE -->
+
+<section id="loginEstudiantePantalla" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver"
+            onclick="mostrar('accesoEstudiante')">
+        ← VOLVER
+    </button>
+
+    <div class="etiqueta">ESTUDIANTE</div>
+
+    <h2>Iniciar sesión</h2>
+
+    <input id="loginNombreEstudiante"
+           placeholder="Nombre y apellido">
+
+    <select id="loginCursoEstudiante">
+        <option value="">Seleccioná tu curso</option>
+        <option>1°1</option>
+        <option>1°2</option>
+        <option>1°3</option>
+        <option>1°4</option>
+        <option>1°5</option>
+        <option>1°6</option>
+        <option>1°7</option>
+    </select>
+
+    <div class="gmail-field">
+        <input id="loginGmailEstudiante" type="email" placeholder="Tu Gmail (@gmail.com)" autocomplete="email">
+        <button type="button" class="gmail-help" aria-label="Ayuda sobre Gmail" title="Ayuda" onclick="alert('Ingresá tu dirección de Gmail para recibir avisos cuando un profesor o preceptor te envíe un comunicado, sin necesidad de entrar constantemente a la página')">?</button>
+    </div>
+
+    <input id="loginPasswordEstudiante"
+           type="password"
+           placeholder="Contraseña">
+
+    <button class="btn-principal"
+            onclick="loginEstudiante()">
+        INGRESAR
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- LOGIN TUTOR -->
+
+<section id="accesoTutor" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver" onclick="mostrar('inicio')">
+        ← VOLVER AL INICIO
+    </button>
+
+    <div class="etiqueta">PADRE / TUTOR</div>
+
+    <h2>Padre / Tutor</h2>
+
+    <input id="loginNombreTutor"
+           placeholder="Nombre del estudiante">
+
+    <select id="loginCursoTutor">
+        <option value="">Seleccioná el curso</option>
+        <option>1°1</option>
+        <option>1°2</option>
+        <option>1°3</option>
+        <option>1°4</option>
+        <option>1°5</option>
+        <option>1°6</option>
+        <option>1°7</option>
+    </select>
+
+    <div class="gmail-field">
+        <input id="loginGmailTutor" type="email" placeholder="Gmail propio del tutor (@gmail.com)" autocomplete="email">
+        <button type="button" class="gmail-help" aria-label="Ayuda sobre Gmail" title="Ayuda" onclick="alert('Ingresá tu propio Gmail para recibir los comunicados. No coloques el correo de tu hijo o hija, ya que este campo debe corresponder al tutor')">?</button>
+    </div>
+
+    <input id="loginPasswordTutor"
+           type="password"
+                      placeholder="Contraseña del tutor">
+
+    <button class="btn-principal"
+            onclick="loginTutor()">
+        INGRESAR
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- LOGIN PROFESOR -->
+
+<section id="accesoProfesor" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver" onclick="mostrar('inicio')">
+        ← VOLVER AL INICIO
+    </button>
+
+    <div class="etiqueta">PERSONAL ESCOLAR</div>
+
+    <h2>Profesor / Preceptor</h2>
+
+    <div class="selector-rol" id="selectorRol">
+
+        <div class="fondo"></div>
+
+        <button id="btnProfesor"
+                class="activo"
+                onclick="seleccionarRol('Profesor')">
+            PROFESOR
+        </button>
+
+        <button id="btnPreceptor"
+                onclick="seleccionarRol('Preceptor')">
+            PRECEPTOR
+        </button>
+
+    </div>
+
+    <input id="nombreProfesor"
+           placeholder="Nombre y apellido">
+
+    <select id="cursoProfesor">
+        <option value="">Seleccioná el curso</option>
+        <option>1°1</option>
+        <option>1°2</option>
+        <option>1°3</option>
+        <option>1°4</option>
+        <option>1°5</option>
+        <option>1°6</option>
+        <option>1°7</option>
+    </select>
+
+    <input id="passwordProfesor"
+           type="password"
+           placeholder="Contraseña">
+
+    <button class="btn-principal"
+            onclick="loginProfesor()">
+        INGRESAR
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- PANEL ESTUDIANTE -->
+
+<section id="panelEstudiante" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver" onclick="cerrarSesion()">
+        ← CERRAR SESIÓN
+    </button>
+
+    <div class="etiqueta">PANEL / ESTUDIANTE</div>
+
+    <h2>Panel del estudiante</h2>
+
+    <p id="bienvenidaEstudiante"></p>
+
+</div>
+
+<div class="info-bar">
+
+    <div class="info-box">
+        <span>ALUMNO</span>
+        <strong id="datoAlumnoEstudiante"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>CURSO</span>
+        <strong id="datoCursoEstudiante"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>ESTADO</span>
+        <strong>CONECTADO</strong>
+    </div>
+
+</div>
+
+<div class="tarjeta">
+
+    <div class="etiqueta">NOTIFICACIONES</div>
+
+    <div class="desplegable-comunicados"
+         onclick="toggleComunicados(
+             'contenidoRecientesEstudiante',
+             'flechaRecientesEstudiante'
+         )">
+
+        <div>
+            <span class="icono-desplegable">🔔</span>
+            <strong>COMUNICADOS RECIENTES</strong>
+        </div>
+
+        <span id="flechaRecientesEstudiante"
+              class="flecha-desplegable">
+            ▼
+        </span>
+
+    </div>
+
+    <div id="contenidoRecientesEstudiante"
+         class="contenido-desplegable">
+
+        <div class="log-cabecera">
+            <span>COMUNICADOS</span>
+            <span>FECHA / HORA</span>
+        </div>
+
+        <div id="ultimosEstudiante"></div>
+
+    </div>
+
+</div>
+
+<div class="tarjeta">
+
+    <div class="etiqueta">CALENDARIO</div>
+
+    <h2>📅 Comunicados por mes</h2>
+
+    <p>
+        Los puntos rojos indican comunicados nuevos.
+    </p>
+
+    <div id="mesesEstudiante"
+         class="grid-meses"></div>
+
+</div>
+
+</section>
+
+
+<!-- PANEL TUTOR -->
+
+<section id="panelTutor" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver" onclick="cerrarSesion()">
+        ← CERRAR SESIÓN
+    </button>
+
+    <div class="etiqueta">PANEL / PADRE-TUTOR</div>
+
+    <h2>Panel del padre / tutor</h2>
+
+    <p id="bienvenidaTutor"></p>
+
+</div>
+
+<div class="info-bar">
+
+    <div class="info-box">
+        <span>ALUMNO</span>
+        <strong id="datoAlumnoTutor"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>CURSO</span>
+        <strong id="datoCursoTutor"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>FIRMA</span>
+        <strong>HABILITADA</strong>
+    </div>
+
+</div>
+
+<div class="tarjeta">
+
+    <div class="etiqueta">NOTIFICACIONES</div>
+
+    <div class="desplegable-comunicados"
+         onclick="toggleComunicados(
+             'contenidoRecientesTutor',
+             'flechaRecientesTutor'
+         )">
+
+        <div>
+            <span class="icono-desplegable">🔔</span>
+            <strong>COMUNICADOS RECIENTES</strong>
+        </div>
+
+        <span id="flechaRecientesTutor"
+              class="flecha-desplegable">
+            ▼
+        </span>
+
+    </div>
+
+    <div id="contenidoRecientesTutor"
+         class="contenido-desplegable">
+
+        <div class="log-cabecera">
+            <span>COMUNICADOS</span>
+            <span>FECHA / HORA</span>
+        </div>
+
+        <div id="ultimosTutor"></div>
+
+    </div>
+
+</div>
+
+<div class="tarjeta">
+
+    <div class="etiqueta">CALENDARIO</div>
+
+    <h2>📅 Comunicados por mes</h2>
+
+    <p>
+        Los puntos rojos indican comunicados nuevos.
+    </p>
+
+    <div id="mesesTutor"
+         class="grid-meses"></div>
+
+</div>
+
+</section>
+
+
+<!-- DÍAS -->
+
+<section id="pantallaDias" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="volverMeses()">
+        ← VOLVER A LOS MESES
+    </button>
+
+    <div class="etiqueta">CALENDARIO / DÍAS</div>
+
+    <h2 id="tituloDias"></h2>
+
+    <p>Seleccioná un día.</p>
+
+    <div id="dias"
+         class="grid-dias"></div>
+
+</div>
+
+</section>
+
+
+<!-- HOJA -->
+
+<section id="pantallaHoja" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="volverDias()">
+        ← VOLVER A LOS DÍAS
+    </button>
+
+    <div class="etiqueta">DOCUMENTO / COMUNICADO</div>
+
+    <h2>Hoja de comunicado</h2>
+
+    <div id="informacionHojas"></div>
+
+    <div id="contenedorHojas"></div>
+
+</div>
+
+</section>
+
+
+<!-- PANEL PROFESOR -->
+
+<section id="panelProfesor" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver" onclick="cerrarSesion()">
+        ← CERRAR SESIÓN
+    </button>
+
+    <div class="etiqueta">PANEL / PERSONAL ESCOLAR</div>
+
+    <h2 id="tituloPanelProfesor">
+        Panel del profesor
+    </h2>
+
+    <p id="bienvenidaProfesor"></p>
+
+</div>
+
+<div class="info-bar">
+
+    <div class="info-box">
+        <span>USUARIO</span>
+        <strong id="staffUsuario"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>ROL</span>
+        <strong id="staffRol"></strong>
+    </div>
+
+    <div class="info-box">
+        <span>CURSO</span>
+        <strong id="staffCurso"></strong>
+    </div>
+
+</div>
+
+<div class="menu">
+
+    <button onclick="abrirTodos()">
+        <span class="menu-icono">📢</span>
+        COMUNICADO PARA TODOS
+        <span class="menu-codigo">CURSO SELECCIONADO</span>
+    </button>
+
+    <button onclick="abrirPersonales()">
+        <span class="menu-icono">👤</span>
+        COMUNICADO PERSONAL
+        <span class="menu-codigo">ALUMNO ESPECÍFICO</span>
+    </button>
+
+    <button onclick="cargarEstudiantes()">
+        <span class="menu-icono">👨‍🎓</span>
+        ESTUDIANTES
+        <span class="menu-codigo">ALUMNOS / CURSO</span>
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- TODOS -->
+
+<section id="pantallaTodos" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="mostrar('panelProfesor')">
+        ← VOLVER AL PANEL
+    </button>
+
+    <div class="etiqueta">COMUNICADO / TODOS</div>
+
+    <h2>📢 Comunicado para todos</h2>
+
+    <p>
+        Curso seleccionado:
+        <strong id="cursoTodos"></strong>
+    </p>
+
+    <p>Elegí un mes.</p>
+
+    <div id="mesesTodos"
+         class="grid-meses"></div>
+
+</div>
+
+</section>
+
+
+<!-- PERSONALES -->
+
+<section id="pantallaPersonales" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="mostrar('panelProfesor')">
+        ← VOLVER AL PANEL
+    </button>
+
+    <div class="etiqueta">COMUNICADO / PERSONAL</div>
+
+    <h2>👤 Comunicado personal</h2>
+
+    <p>Seleccioná el estudiante.</p>
+
+    <div id="listaPersonales"
+         class="lista-estudiantes"></div>
+
+</div>
+
+</section>
+  <!-- MESES PERSONAL -->
+
+<section id="pantallaMesesPersonal" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="mostrar('pantallaPersonales')">
+        ← VOLVER A ESTUDIANTES
+    </button>
+
+    <div class="etiqueta">PERSONAL / MESES</div>
+
+    <h2 id="tituloMesPersonal"></h2>
+
+    <p>Elegí un mes.</p>
+
+    <div id="mesesPersonal"
+         class="grid-meses"></div>
+
+</div>
+
+</section>
+
+
+<!-- ESTUDIANTES -->
+
+<section id="pantallaEstudiantes" class="pantalla">
+
+<div class="tarjeta">
+
+    <button class="btn-volver"
+            onclick="mostrar('panelProfesor')">
+        ← VOLVER AL PANEL
+    </button>
+
+    <div class="etiqueta">BASE DE DATOS / ESTUDIANTES</div>
+
+    <h2>👨‍🎓 Estudiantes registrados</h2>
+
+    <div id="listaEstudiantes"
+         class="lista-estudiantes"></div>
+
+</div>
+
+</section>
+
+
+<!-- MODIFICAR PASSWORD -->
+
+<section id="pantallaModificarPassword" class="pantalla">
+
+<div class="tarjeta login-card">
+
+    <button class="btn-volver"
+            onclick="cargarEstudiantes()">
+        ← VOLVER
+    </button>
+
+    <div class="etiqueta">SEGURIDAD / TUTOR</div>
+
+    <h2>🔑 Modificar contraseña</h2>
+
+    <p id="nombreAlumnoPassword"></p>
+
+    <input id="nuevaPasswordTutor"
+           placeholder="Nueva contraseña">
+
+    <button class="btn-principal"
+            onclick="guardarNuevaPasswordTutor()">
+        ACTUALIZAR CONTRASEÑA
+    </button>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATOS
+===================================================== */
+
+let estudiantes =
+JSON.parse(localStorage.getItem("estudiantes")) || [];
+
+let comunicados =
+JSON.parse(localStorage.getItem("comunicados")) || [];
+
+
+/* Compatibilidad con registros anteriores */
+
+estudiantes = estudiantes.map(e => ({
+    ...e,
+    curso: e.curso || "",
+    ultimoAccesoEstudiante:
+        e.ultimoAccesoEstudiante || 0,
+    ultimoAccesoTutor:
+        e.ultimoAccesoTutor || 0
+}));
+
+comunicados = comunicados.map(c => ({
+    ...c,
+    tipo:c.tipo || "todos",
+    curso:c.curso || "",
+    hoja:c.hoja || 1,
+    adjuntos:Array.isArray(c.adjuntos) ? c.adjuntos : []
+}));
+
+
+let usuarioActual = null;
+let alumnoSeleccionado = null;
+let alumnoPasswordSeleccionado = null;
+
+let modo = "";
+let mesActual = "";
+let diaActual = 0;
+let hojaActual = 1;
+let rolProfesor = "Profesor";
+let adjuntosPendientes = [];
+
+
+const meses = [
+    "Enero","Febrero","Marzo","Abril",
+    "Mayo","Junio","Julio","Agosto",
+    "Septiembre","Octubre","Noviembre","Diciembre"
+];
+
+const cursos = [
+    "1°1","1°2","1°3","1°4",
+    "1°5","1°6","1°7"
+];
+
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+function mostrar(id){
+
+    document.querySelectorAll(".pantalla")
+    .forEach(p =>
+        p.classList.remove("activa")
+    );
+
+    const pantalla =
+        document.getElementById(id);
+
+    if(pantalla)
+        pantalla.classList.add("activa");
+
+
+    if(id === "panelEstudiante")
+        cargarPanelEstudiante();
+
+    if(id === "panelTutor")
+        cargarPanelTutor();
+}
+
+
+/* =====================================================
+   DESPLEGABLE
+===================================================== */
+
+function toggleComunicados(contenidoId, flechaId){
+
+    const contenido =
+        document.getElementById(contenidoId);
+
+    const flecha =
+        document.getElementById(flechaId);
+
+    if(!contenido || !flecha)
+        return;
+
+    contenido.classList.toggle("abierto");
+    flecha.classList.toggle("abierta");
+}
+
+
+/* =====================================================
+   ROL
+===================================================== */
+
+function seleccionarRol(rol){
+
+    rolProfesor = rol;
+
+    const selector =
+        document.getElementById("selectorRol");
+
+    const profesor =
+        document.getElementById("btnProfesor");
+
+    const preceptor =
+        document.getElementById("btnPreceptor");
+
+
+    if(rol === "Preceptor"){
+
+        selector.classList.add("preceptor");
+        preceptor.classList.add("activo");
+        profesor.classList.remove("activo");
+
+    }else{
+
+        selector.classList.remove("preceptor");
+        profesor.classList.add("activo");
+        preceptor.classList.remove("activo");
+
+    }
+}
+
+
+/* =====================================================
+   REGISTRO
+===================================================== */
+
+function registrarEstudiante(){
+
+    const nombre =
+        document.getElementById(
+            "nombreEstudiante"
+        ).value.trim();
+
+    const curso =
+        document.getElementById(
+            "cursoEstudiante"
+        ).value;
+
+    const gmail =
+        document.getElementById(
+            "gmailEstudiante"
+        ).value.trim().toLowerCase();
+
+    const password =
+        document.getElementById(
+            "passwordEstudiante"
+        ).value;
+
+    const password2 =
+        document.getElementById(
+            "passwordEstudiante2"
+        ).value;
+
+
+    if(!nombre || !curso || !gmail || !password){
+
+        alert("Completá todos los campos.");
+
+        return;
+    }
+
+    if(!/^[A-Z0-9._%+-]+@gmail\\.com$/i.test(gmail)){
+        alert("Ingresá una dirección válida que termine en @gmail.com.");
+        return;
+    }
+
+
+    if(password !== password2){
+
+        alert("Las contraseñas no coinciden.");
+
+        return;
+    }
+
+
+    const existe =
+        estudiantes.some(e =>
+            e.nombre.toLowerCase() ===
+            nombre.toLowerCase()
+        );
+
+
+    if(existe){
+
+        alert(
+            "Ese estudiante ya está registrado."
+        );
+
+        return;
+    }
+
+
+    estudiantes.push({
+
+        id:Date.now(),
+
+        nombre:nombre,
+
+        curso:curso,
+
+        gmailEstudiante:gmail,
+
+        passwordEstudiante:password,
+
+        passwordTutor:generarPasswordTutor(),
+
+        ultimoAccesoEstudiante:Date.now(),
+
+        ultimoAccesoTutor:Date.now()
+
+    });
+
+
+    guardarDatos();
+
+
+    alert(
+        "Registro realizado correctamente."
+    );
+
+
+    document.getElementById(
+        "nombreEstudiante"
+    ).value = "";
+
+    document.getElementById(
+        "cursoEstudiante"
+    ).value = "";
+
+    document.getElementById(
+        "gmailEstudiante"
+    ).value = "";
+
+    document.getElementById(
+        "passwordEstudiante"
+    ).value = "";
+
+    document.getElementById(
+        "passwordEstudiante2"
+    ).value = "";
+
+
+    mostrar("loginEstudiantePantalla");
+}
+
+
+/* =====================================================
+   PASSWORD TUTOR
+===================================================== */
+
+function generarPasswordTutor(){
+
+    return "TUT-" +
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+}
+
+
+/* =====================================================
+   LOGIN ESTUDIANTE
+===================================================== */
+
+function loginEstudiante(){
+
+    const nombre =
+        document.getElementById(
+            "loginNombreEstudiante"
+        ).value.trim();
+
+    const curso =
+        document.getElementById(
+            "loginCursoEstudiante"
+        ).value;
+
+    const gmail =
+        document.getElementById(
+            "loginGmailEstudiante"
+        ).value.trim().toLowerCase();
+
+    const password =
+        document.getElementById(
+            "loginPasswordEstudiante"
+        ).value;
+
+
+    if(!nombre || !curso || !gmail || !password){
+
+        alert("Completá todos los campos.");
+
+        return;
+    }
+
+
+    if(!/^[A-Z0-9._%+-]+@gmail\\.com$/i.test(gmail)){
+        alert("Ingresá una dirección válida que termine en @gmail.com.");
+        return;
+    }
+
+    const alumno =
+        estudiantes.find(e =>
+            e.nombre.toLowerCase() ===
+            nombre.toLowerCase() &&
+            e.curso === curso &&
+            e.passwordEstudiante ===
+            password
+        );
+
+
+    if(!alumno){
+
+        alert(
+            "Nombre, curso o contraseña incorrectos."
+        );
+
+        return;
+    }
+
+
+    if(alumno.gmailEstudiante && alumno.gmailEstudiante !== gmail){
+        alert("El Gmail ingresado no coincide con el registrado para este alumno.");
+        return;
+    }
+
+    // En cuentas anteriores que todavía no tenían Gmail, se registra al ingresar por primera vez.
+    if(!alumno.gmailEstudiante){
+        alumno.gmailEstudiante = gmail;
+        guardarDatos();
+    }
+
+    usuarioActual = {
+
+        tipo:"estudiante",
+
+        alumno:alumno,
+
+        nombre:alumno.nombre,
+
+        curso:alumno.curso
+
+    };
+
+
+    /*
+       No actualizamos la última lectura al entrar.
+       La lectura se marca solamente
+           mostrar("panelEstudiante");
+}
+
+
+/* =====================================================
+   LOGIN TUTOR
+===================================================== */
+
+function loginTutor(){
+
+    const nombre =
+        document.getElementById(
+            "loginNombreTutor"
+        ).value.trim();
+
+    const curso =
+        document.getElementById(
+            "loginCursoTutor"
+        ).value;
+
+    const gmail =
+        document.getElementById(
+            "loginGmailTutor"
+        ).value.trim().toLowerCase();
+
+    const password =
+        document.getElementById(
+            "loginPasswordTutor"
+        ).value;
+
+
+    if(!nombre || !curso || !gmail || !password){
+
+        alert("Completá todos los campos.");
+
+        return;
+    }
+
+
+    if(!/^[A-Z0-9._%+-]+@gmail\\.com$/i.test(gmail)){
+        alert("Ingresá una dirección válida que termine en @gmail.com.");
+        return;
+    }
+
+    const alumno =
+        estudiantes.find(e =>
+            e.nombre.toLowerCase() ===
+            nombre.toLowerCase() &&
+            e.curso === curso &&
+            e.passwordTutor ===
+            password
+        );
+
+
+    if(!alumno){
+
+        alert(
+            "Nombre, curso o contraseña incorrectos."
+        );
+
+        return;
+    }
+
+
+    if(alumno.gmailTutor && alumno.gmailTutor !== gmail){
+        alert("El Gmail ingresado no coincide con el registrado para este tutor.");
+        return;
+    }
+
+    // El tutor vincula su propio Gmail en el primer acceso; luego se verifica en cada ingreso.
+    if(!alumno.gmailTutor){
+        alumno.gmailTutor = gmail;
+        guardarDatos();
+    }
+
+    usuarioActual = {
+
+        tipo:"tutor",
+
+        alumno:alumno,
+
+        nombre:"Padre / Tutor",
+
+        curso:alumno.curso
+
+    };
+
+
+    mostrar("panelTutor");
+}
+
+
+/* =====================================================
+   LOGIN PROFESOR
+===================================================== */
+
+function loginProfesor(){
+
+    const nombre =
+        document.getElementById(
+            "nombreProfesor"
+        ).value.trim();
+
+    const curso =
+        document.getElementById(
+            "cursoProfesor"
+        ).value;
+
+    const password =
+        document.getElementById(
+            "passwordProfesor"
+        ).value;
+
+
+    if(!curso){
+
+        alert(
+            "Seleccioná el curso."
+        );
+
+        return;
+    }
+
+
+    if(password !== "Maestros2026"){
+
+        alert("Contraseña incorrecta.");
+
+        return;
+    }
+
+
+    usuarioActual = {
+
+        tipo:rolProfesor.toLowerCase(),
+
+        nombre:nombre || rolProfesor,
+
+        curso:curso
+
+    };
+
+
+    document.getElementById(
+        "tituloPanelProfesor"
+    ).textContent =
+        rolProfesor === "Profesor"
+        ? "Panel del profesor"
+        : "Panel del preceptor";
+
+
+    document.getElementById(
+        "bienvenidaProfesor"
+    ).textContent =
+        "Usuario: " +
+        usuarioActual.nombre;
+
+
+    document.getElementById(
+        "staffUsuario"
+    ).textContent =
+        usuarioActual.nombre;
+
+
+    document.getElementById(
+        "staffRol"
+    ).textContent =
+        rolProfesor.toUpperCase();
+
+
+    document.getElementById(
+        "staffCurso"
+    ).textContent =
+        curso;
+
+
+    mostrar("panelProfesor");
+}
+
+
+/* =====================================================
+   PANEL ESTUDIANTE
+===================================================== */
+
+function cargarPanelEstudiante(){
+
+    const alumno =
+        usuarioActual.alumno;
+
+
+    document.getElementById(
+        "bienvenidaEstudiante"
+    ).textContent =
+        "Bienvenido/a, " +
+        alumno.nombre;
+
+
+    document.getElementById(
+        "datoAlumnoEstudiante"
+    ).textContent =
+        alumno.nombre;
+
+
+    document.getElementById(
+        "datoCursoEstudiante"
+    ).textContent =
+        alumno.curso;
+
+
+    cargarMesesUsuario(
+        "mesesEstudiante",
+        alumno,
+        "estudiante"
+    );
+
+
+    cargarUltimosComunicados(
+        "ultimosEstudiante",
+        alumno,
+        "estudiante"
+    );
+}
+
+
+/* =====================================================
+   PANEL TUTOR
+===================================================== */
+
+function cargarPanelTutor(){
+
+    const alumno =
+        usuarioActual.alumno;
+
+
+    document.getElementById(
+        "bienvenidaTutor"
+    ).textContent =
+        "Comunicados correspondientes a: " +
+        alumno.nombre;
+
+
+    document.getElementById(
+        "datoAlumnoTutor"
+    ).textContent =
+        alumno.nombre;
+
+
+    document.getElementById(
+        "datoCursoTutor"
+    ).textContent =
+        alumno.curso;
+
+
+    cargarMesesUsuario(
+        "mesesTutor",
+        alumno,
+        "tutor"
+    );
+
+
+    cargarUltimosComunicados(
+        "ultimosTutor",
+        alumno,
+        "tutor"
+    );
+}
+
+
+/* =====================================================
+   VISIBILIDAD
+===================================================== */
+
+function esVisibleParaAlumno(c, alumno){
+
+    if(!alumno)
+        return false;
+
+
+    if(c.tipo === "todos"){
+
+        return c.curso === alumno.curso;
+
+    }
+
+
+    return c.tipo === "personal" &&
+           c.alumnoId === alumno.id;
+}
+
+
+/* =====================================================
+   NUEVOS
+===================================================== */
+
+function esNuevo(c, alumno, tipo){
+
+    const lectura =
+        tipo === "estudiante"
+        ? alumno.ultimoAccesoEstudiante || 0
+        : alumno.ultimoAccesoTutor || 0;
+
+
+    return c.fechaHora > lectura;
+}
+
+
+function hayNuevosEnMes(alumno, mes, tipo){
+
+    return comunicados.some(c =>
+
+        c.mes === mes &&
+
+        esVisibleParaAlumno(c,alumno) &&
+
+        esNuevo(c,alumno,tipo)
+
+    );
+}
+
+
+function hayNuevosEnDia(
+    alumno,
+    mes,
+    dia,
+    tipo
+){
+
+    return comunicados.some(c =>
+
+        c.mes === mes &&
+
+        c.dia === dia &&
+
+        esVisibleParaAlumno(c,alumno) &&
+
+        esNuevo(c,alumno,tipo)
+
+    );
+}
+
+
+/* =====================================================
+   MARCAR COMUNICADO COMO LEÍDO
+===================================================== */
+
+function marcarDiaComoLeido(alumno, tipo){
+
+    if(!alumno)
+        return;
+
+
+    const tieneNuevos =
+        comunicados.some(c =>
+
+            c.mes === mesActual &&
+
+            c.dia === diaActual &&
+
+            esVisibleParaAlumno(c, alumno) &&
+
+            esNuevo(c, alumno, tipo)
+
+        );
+
+
+    if(!tieneNuevos)
+        return;
+
+
+    const ahora = Date.now();
+
+
+    if(tipo === "estudiante"){
+
+        alumno.ultimoAccesoEstudiante =
+            ahora;
+
+    }
+
+
+    if(tipo === "tutor"){
+
+        alumno.ultimoAccesoTutor =
+            ahora;
+
+    }
+
+
+    guardarDatos();
+}
+
+
+/* =====================================================
+   MESES USUARIO
+===================================================== */
+
+function cargarMesesUsuario(
+    containerId,
+    alumno,
+    tipo
+){
+
+    const contenedor =
+        document.getElementById(containerId);
+
+
+    contenedor.innerHTML = "";
+
+
+    meses.forEach((mes,index)=>{
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "mes";
+
+
+        let punto = "";
+
+
+        if(
+            hayNuevosEnMes(
+                alumno,
+                mes,
+                tipo
+            )
+        ){
+
+            punto =
+                '<span class="punto-rojo"></span>';
+
+        }
+
+
+        div.innerHTML =
+            punto +
+
+            `<span class="mes-numero">
+                ${String(index+1).padStart(2,"0")}
+            </span>
+
+            ${mes}`;
+
+
+        div.onclick = ()=>{
+
+            mesActual = mes;
+
+            modo = tipo;
+
+            mostrarDiasUsuario(alumno);
+
+        };
+
+
+        contenedor.appendChild(div);
+
+    });
+}
+
+
+/* =====================================================
+   DÍAS USUARIO
+===================================================== */
+
+function mostrarDiasUsuario(alumno){
+
+    document.getElementById(
+        "tituloDias"
+    ).textContent =
+        mesActual +
+        " · Elegí un día";
+
+
+    const contenedor =
+        document.getElementById("dias");
+
+
+    contenedor.innerHTML = "";
+
+
+    for(let i=1;i<=30;i++){
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "dia";
+
+
+        let punto = "";
+
+
+        if(
+            hayNuevosEnDia(
+                alumno,
+                mesActual,
+                i,
+                modo
+            )
+        ){
+
+            punto =
+                '<span class="punto-rojo"></span>';
+
+        }
+
+
+        div.innerHTML =
+            punto + i;
+
+
+        div.onclick = ()=>{
+
+            diaActual = i;
+
+
+            /*
+               Cuando el estudiante o tutor abre
+               un día que contiene un comunicado nuevo,
+               se marca como leído y desaparece
+               el punto rojo.
+            */
+
+            if(
+                modo === "estudiante" ||
+                modo === "tutor"
+            ){
+
+                marcarDiaComoLeido(
+                    alumno,
+                    modo
+                );
+
+            }
+
+
+            hojaActual = 1;
+
+
+            mostrar(
+                "pantallaHoja"
+            );
+
+
+            cargarHojasDia();
+
+        };
+
+
+        contenedor.appendChild(div);
+
+    }
+
+
+    mostrar("pantallaDias");
+}
+
+
+/* =====================================================
+   ÚLTIMOS COMUNICADOS
+===================================================== */
+
+function cargarUltimosComunicados(
+    containerId,
+    alumno,
+    tipo
+){
+
+    const contenedor =
+        document.getElementById(containerId);
+
+
+    const lista =
+        comunicados
+
+        .filter(c =>
+            esVisibleParaAlumno(
+                c,
+                alumno
+            )
+        )
+
+        .sort((a,b)=>
+            b.fechaHora-a.fechaHora
+        )
+
+        .slice(0,8);
+
+
+    if(lista.length === 0){
+
+        contenedor.innerHTML =
+            "<p>No hay comunicados registrados.</p>";
+
+        return;
+    }
+
+
+    contenedor.innerHTML = "";
+
+
+    lista.forEach(c=>{
+
+        const fecha =
+            formatearFecha(
+                c.fechaHora
+            );
+
+
+        const nuevo =
+            esNuevo(
+                c,
+                alumno,
+                tipo
+            );
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "comunicado-mini";
+
+
+        div.innerHTML = `
+
+            <div class="fecha">
+
+                ${c.dia} de ${c.mes}
+
+                ${
+                    nuevo
+                    ? '<span class="nuevo">NUEVO</span>'
+                    : ''
+                }
+
+            </div>
+
+
+            <div class="hora">
+
+                HORA: ${fecha.hora}
+
+            </div>
+
+
+            <div class="texto">
+
+                ${escapeHTML(c.texto)}
+
+            </div>
+
+
+            <small>
+
+                AUTOR:
+
+                ${escapeHTML(c.profesor)}
+
+            </small>
+
+        `;
+
+
+        contenedor.appendChild(div);
+
+    });
+}
+
+
+/* =====================================================
+   FECHA Y HORA DE ARGENTINA
+===================================================== */
+
+function formatearFecha(timestamp){
+
+    const partes =
+        new Intl.DateTimeFormat("es-AR", {
+
+            timeZone:
+                "America/Argentina/Buenos_Aires",
+
+            year:"numeric",
+
+            month:"2-digit",
+
+            day:"2-digit",
+
+            hour:"2-digit",
+
+            minute:"2-digit",
+
+            second:"2-digit",
+
+            hour12:false
+
+        }).formatToParts(
+            new Date(timestamp)
+        );
+
+
+    const obtener = tipo => {
+
+        const parte =
+            partes.find(
+                p => p.type === tipo
+            );
+
+        return parte ? parte.value : "";
+
+    };
+            return parte
+            ? parte.value
+            : "";
+
+    };
+
+
+    return {
+
+        fecha:
+            `${obtener("day")}/` +
+            `${obtener("month")}/` +
+            `${obtener("year")}`,
+
+        hora:
+            `${obtener("hour")}:` +
+            `${obtener("minute")}`
+
+    };
+}
+
+
+/* =====================================================
+   TODOS
+===================================================== */
+
+function abrirTodos(){
+
+    modo = "todos";
+
+
+    document.getElementById(
+        "cursoTodos"
+    ).textContent =
+        usuarioActual.curso;
+
+
+    const contenedor =
+        document.getElementById(
+            "mesesTodos"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    meses.forEach((mes,index)=>{
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "mes";
+
+
+        div.innerHTML =
+
+            `<span class="mes-numero">
+                ${String(index+1).padStart(2,"0")}
+            </span>
+
+            ${mes}`;
+
+
+        div.onclick = ()=>{
+
+            mesActual = mes;
+
+            abrirDiasProfesor();
+
+        };
+
+
+        contenedor.appendChild(div);
+
+    });
+
+
+    mostrar("pantallaTodos");
+}
+
+
+/* =====================================================
+   PERSONALES
+===================================================== */
+
+function abrirPersonales(){
+
+    cargarPersonales();
+
+    mostrar("pantallaPersonales");
+}
+
+
+function cargarPersonales(){
+
+    const contenedor =
+        document.getElementById(
+            "listaPersonales"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    const alumnosCurso =
+        estudiantes.filter(
+            alumno =>
+                alumno.curso ===
+                usuarioActual.curso
+        );
+
+
+    if(alumnosCurso.length === 0){
+
+        contenedor.innerHTML =
+            "<p>No hay estudiantes registrados en este curso.</p>";
+
+        return;
+    }
+
+
+    alumnosCurso.forEach(alumno=>{
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "estudiante-item";
+
+
+        div.innerHTML = `
+
+            <strong>
+                👨‍🎓
+                ${escapeHTML(alumno.nombre)}
+            </strong>
+
+            <br>
+
+            <span class="password-tecnico">
+                CURSO:
+                ${escapeHTML(alumno.curso)}
+            </span>
+
+            <br>
+
+            <button
+                class="btn-principal"
+                onclick="seleccionarAlumnoPersonal(${alumno.id})">
+
+                ELEGIR ESTUDIANTE
+
+            </button>
+
+        `;
+
+
+        contenedor.appendChild(div);
+
+    });
+}
+
+
+function seleccionarAlumnoPersonal(id){
+
+    alumnoSeleccionado =
+        estudiantes.find(
+            e =>
+                e.id === id &&
+                e.curso ===
+                usuarioActual.curso
+        );
+
+
+    if(!alumnoSeleccionado)
+        return;
+
+
+    abrirMesesPersonal();
+}
+
+
+function abrirMesesPersonal(){
+
+    modo = "personal";
+
+
+    document.getElementById(
+        "tituloMesPersonal"
+    ).textContent =
+
+        "Estudiante: " +
+
+        alumnoSeleccionado.nombre +
+
+        " · Curso: " +
+
+        alumnoSeleccionado.curso;
+
+
+    const contenedor =
+        document.getElementById(
+            "mesesPersonal"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    meses.forEach((mes,index)=>{
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "mes";
+
+
+        div.innerHTML =
+
+            `<span class="mes-numero">
+                ${String(index+1).padStart(2,"0")}
+            </span>
+
+            ${mes}`;
+
+
+        div.onclick = ()=>{
+
+            mesActual = mes;
+
+            abrirDiasProfesor();
+
+        };
+
+
+        contenedor.appendChild(div);
+
+    });
+
+
+    mostrar(
+        "pantallaMesesPersonal"
+    );
+}
+
+
+/* =====================================================
+   DÍAS PROFESOR
+===================================================== */
+
+function abrirDiasProfesor(){
+
+    document.getElementById(
+        "tituloDias"
+    ).textContent =
+
+        mesActual +
+        " · Elegí un día";
+
+
+    const contenedor =
+        document.getElementById(
+            "dias"
+        );
+
+
+    contenedor.innerHTML = "";
+
+
+    for(let i=1;i<=30;i++){
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "dia";
+
+
+        div.textContent = i;
+
+
+        div.onclick = ()=>{
+
+            diaActual = i;
+
+            hojaActual = 1;
+
+            mostrar(
+                "pantallaHoja"
+            );
+
+            cargarHojasDia();
+
+        };
+
+
+        contenedor.appendChild(div);
+
+    }
+
+
+    mostrar(
+        "pantallaDias"
+    );
+}
+
+
+/* =====================================================
+   COMUNICADOS DEL DÍA
+===================================================== */
+
+function obtenerComunicadosDia(){
+
+    return comunicados
+
+        .filter(c=>{
+
+            if(
+                c.mes !== mesActual ||
+                c.dia !== diaActual
+            )
+                return false;
+
+
+            if(modo === "todos"){
+
+                return c.tipo === "todos" &&
+                       c.curso ===
+                       usuarioActual.curso;
+
+            }
+
+
+            if(modo === "personal"){
+
+                return c.tipo === "personal" &&
+
+                       c.alumnoId ===
+                       alumnoSeleccionado.id &&
+
+                       c.curso ===
+                       usuarioActual.curso;
+
+            }
+
+
+            if(
+                modo === "estudiante" ||
+                modo === "tutor"
+            ){
+
+                return esVisibleParaAlumno(
+                    c,
+                    usuarioActual.alumno
+                );
+
+            }
+
+
+            return false;
+
+        })
+
+        .sort((a,b)=>
+            (a.hoja||1) -
+            (b.hoja||1)
+        );
+}
+
+
+/* =====================================================
+   HOJAS
+===================================================== */
+
+function cargarHojasDia(){
+
+    document.getElementById(
+        "infoMes"
+    );
+
+
+    const lista =
+        obtenerComunicadosDia();
+
+
+    let cantidad =
+        Math.max(
+            lista.length,
+            1
+        );
+
+
+    if(cantidad > 10)
+        cantidad = 10;
+
+
+    /* INFORMACIÓN SUPERIOR */
+
+    const informacion =
+        document.getElementById(
+            "informacionHojas"
+        );
+
+
+    if(
+        modo === "todos" ||
+        modo === "personal"
+    ){
+
+        informacion.innerHTML = `
+
+            <div class="info-bar">
+
+                <div class="info-box">
+                    <span>MES</span>
+                    <strong>
+                        ${escapeHTML(mesActual)}
+                    </strong>
+                </div>
+
+                <div class="info-box">
+                    <span>DÍA</span>
+                    <strong>
+                        ${diaActual}
+                    </strong>
+                </div>
+
+                <div class="info-box">
+                    <span>MÁXIMO DE COMUNICADOS</span>
+                    <strong>
+                        10 HOJAS
+                    </strong>
+                </div>
+
+            </div>
+
+        `;
+
+    }else{
+
+        informacion.innerHTML = `
+
+            <div class="info-bar">
+
+                <div class="info-box">
+                    <span>MES</span>
+                    <strong>
+                        ${escapeHTML(mesActual)}
+                    </strong>
+                </div>
+
+                <div class="info-box">
+                    <span>DÍA</span>
+                    <strong>
+                        ${diaActual}
+                    </strong>
+                </div>
+
+                <div class="info-box">
+                    <span>ESTADO</span>
+                    <strong>
+                        LECTURA
+                    </strong>
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    const contenedor =
+        document.getElementById(
+            "contenedorHojas"
+        );
+
+
+    let html =
+        '<div class="hojas">';
+
+
+    for(
+        let i=1;
+        i<=cantidad;
+        i++
+    ){
+
+        html += `
+
+            <button
+                class="hoja-tab ${
+                    i===hojaActual
+                    ? "activa"
+                    : ""
+                }"
+                onclick="seleccionarHoja(${i})">
+
+                📄 Hoja ${i}
+
+            </button>
+
+        `;
+
+    }
+
+
+    if(
+        (
+            modo==="todos" ||
+            modo==="personal"
+        ) &&
+        cantidad < 10
+    ){
+                html += `
+
+            <button
+                class="hoja-tab nueva"
+                onclick="nuevaHoja()">
+
+                + Nueva hoja
+
+            </button>
+
+        `;
+
+    }
+
+
+    html += "</div>";
+
+
+    const comunicado =
+        lista.find(
+            c =>
+                (c.hoja||1) ===
+                hojaActual
+        );
+
+
+    /* =================================================
+       PROFESOR / PRECEPTOR
+    ================================================= */
+
+    if(
+        modo === "todos" ||
+        modo === "personal"
+    ){
+
+        const nombreAlumno =
+            modo === "personal"
+            ? escapeHTML(
+                alumnoSeleccionado.nombre
+              )
+            : "Todos los estudiantes";
+
+
+        const cursoAlumno =
+            modo === "personal"
+            ? escapeHTML(
+                alumnoSeleccionado.curso
+              )
+            : escapeHTML(
+                usuarioActual.curso
+              );
+
+
+        const rolFirma =
+            comunicado &&
+            comunicado.rolFirma
+            ? comunicado.rolFirma
+            : rolProfesor;
+
+
+        html += `
+
+        <div class="hoja-contenido">
+
+            <div class="hoja-fecha">
+
+                ${diaActual}
+                de
+                ${escapeHTML(mesActual)}
+
+            </div>
+
+
+            <h2 class="hoja-titulo">
+
+                CUADERNO DE COMUNICADO
+
+            </h2>
+
+
+            <p class="hoja-subtitulo">
+
+                Comunicación entre la institución,
+                el alumno y la familia
+
+            </p>
+
+
+            <div class="hoja-datos">
+
+                <div class="dato-hoja">
+
+                    <strong>Alumno:</strong>
+
+                    ${nombreAlumno}
+
+                </div>
+
+
+                <div class="dato-hoja">
+
+                    <strong>Curso:</strong>
+
+                    ${cursoAlumno}
+
+                </div>
+
+            </div>
+
+
+            <textarea
+                id="textoComunicado"
+                class="hoja-editor"
+                placeholder="Escribí aquí el comunicado..."
+                spellcheck="true"
+            >${comunicado
+                ? escapeHTML(
+                    comunicado.texto
+                  )
+                : ""
+            }</textarea>
+
+            <div style="margin:18px 0;padding:16px;border:1px dashed #159fe8;border-radius:12px;background:rgba(0,90,160,.08);">
+<label for="archivosComunicado" style="display:block;font-weight:700;margin-bottom:8px;">📎 Adjuntar imágenes, documentos o contenido multimedia</label>
+<input id="archivosComunicado" type="file" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt" onchange="manejarArchivosComunicado(event)" style="max-width:100%;margin-bottom:10px;">
+<small style="display:block;margin-bottom:8px;">Máximo 5 MB por archivo y 8 MB en total por comunicado.</small>
+<div id="listaAdjuntosEditor"></div></div>
+
+
+            <div class="firmas">
+
+                <div class="firma">
+
+                    FIRMA DEL
+                    ${escapeHTML(
+                        rolFirma.toUpperCase()
+                    )}
+
+                    <small>
+
+                        ${escapeHTML(
+                            usuarioActual.nombre
+                        )}
+
+                    </small>
+
+                </div>
+
+
+                <div class="firma">
+
+                    FIRMA PADRE / TUTOR
+
+                    <small>
+
+                        ${
+                            comunicado &&
+                            comunicado.firmadoTutor
+                            ? "✓ FIRMADO"
+                            : "Pendiente de firma"
+                        }
+
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <br>
+
+
+            <button
+                class="btn-principal"
+                onclick="guardarComunicado()">
+
+                ${
+                    comunicado
+                    ? "MODIFICAR COMUNICADO"
+                    : "GUARDAR COMUNICADO"
+                }
+
+            </button>
+
+
+        </div>
+
+        `;
+
+    }
+
+
+    /* =================================================
+       ALUMNO / TUTOR
+    ================================================= */
+
+    else{
+
+        html +=
+            '<div class="hoja-contenido">';
+
+
+        if(!comunicado){
+
+            html += `
+
+                <h2 class="hoja-titulo">
+
+                    CUADERNO DE COMUNICADO
+
+                </h2>
+
+
+                <p class="hoja-subtitulo">
+
+                    No hay comunicado en esta hoja.
+
+                </p>
+
+            `;
+
+        }else{
+
+            const fecha =
+                formatearFecha(
+                    comunicado.fechaHora
+                );
+
+
+            const rolFirma =
+                comunicado.rolFirma ||
+                "Profesor";
+
+
+            html += `
+
+                <div class="hoja-fecha">
+
+                    ${diaActual}
+                    de
+                    ${escapeHTML(mesActual)}
+
+                    ·
+
+                    ${fecha.hora}
+
+                </div>
+
+
+                <h2 class="hoja-titulo">
+
+                    CUADERNO DE COMUNICADO
+
+                </h2>
+
+
+                <p class="hoja-subtitulo">
+
+                    Comunicación escolar
+
+                </p>
+
+
+                <div class="hoja-datos">
+
+                    <div class="dato-hoja">
+
+                        <strong>Alumno:</strong>
+
+                        ${escapeHTML(
+                            usuarioActual.alumno.nombre
+                        )}
+
+                    </div>
+
+
+                    <div class="dato-hoja">
+
+                        <strong>Curso:</strong>
+
+                        ${escapeHTML(
+                            usuarioActual.alumno.curso
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="hoja-escritura">
+
+                    ${escapeHTML(
+                        comunicado.texto
+                    )}
+
+                </div>
+
+                ${renderizarAdjuntos(comunicado.adjuntos)}
+
+                <div class="firmas">
+
+                    <div class="firma">
+
+                        FIRMA DEL
+                        ${escapeHTML(
+                            rolFirma.toUpperCase()
+                        )}
+
+                        <small>
+
+                            ✓
+                            ${escapeHTML(
+                                comunicado.profesor
+                            )}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="firma">
+
+                        FIRMA PADRE / TUTOR
+
+                        <small class="${
+                            comunicado.firmadoTutor
+                            ? "firmado"
+                            : "pendiente"
+                        }">
+
+                            ${
+                                comunicado.firmadoTutor
+                                ? "✓ FIRMADO"
+                                : "● PENDIENTE"
+                            }
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            if(
+                modo === "tutor" &&
+                !comunicado.firmadoTutor
+            ){
+
+                html += `
+
+                    <br>
+
+                    <button
+                        class="btn-verde"
+                        onclick="firmarTutor(${comunicado.id})">
+
+                        ✍ FIRMAR COMUNICADO
+
+                    </button>
+
+                `;
+
+            }
+
+        }
+
+
+        html +=
+            "</div>";
+
+    }
+
+
+    contenedor.innerHTML =
+        html;
+
+    adjuntosPendientes = comunicado && Array.isArray(comunicado.adjuntos)
+        ? [...comunicado.adjuntos]
+        : [];
+    pintarListaAdjuntosEditor();
+
+    /*
+       IMPORTANTE:
+       Tomamos el textarea después de insertar
+       la hoja y lo dejamos directamente editable.
+    */
+
+    const editor =
+        document.getElementById(
+            "textoComunicado"
+        );
+
+
+    if(editor){
+
+        editor.disabled = false;
+        editor.readOnly = false;
+
+        editor.removeAttribute("readonly");
+        editor.removeAttribute("disabled");
+
+        editor.style.pointerEvents =
+            "auto";
+
+        editor.style.userSelect =
+            "text";
+
+    }
+}
+
+
+/* =====================================================
+   HOJA
+===================================================== */
+
+function seleccionarHoja(numero){
+
+    hojaActual = numero;
+    cargarHojasDia();
+}
+
+
+function nuevaHoja(){
+
+    const lista = obtenerComunicadosDia();
+
+    if(lista.length >= 10){
+        alert("Ya alcanzaste el máximo de 10 hojas por día.");
+        return;
+    }
+
+    hojaActual = lista.length + 1;
+    cargarHojasDia();
+
+    const editor = document.getElementById("textoComunicado");
+    if(editor){
+        editor.value = "";
+        editor.focus();
+    }
+
+    adjuntosPendientes = [];
+    pintarListaAdjuntosEditor();
+}
+
+
+function guardarComunicado(){
+
+    const editor = document.getElementById("textoComunicado");
+    const texto = editor ? editor.value.trim() : "";
+
+    if(!texto && (!Array.isArray(adjuntosPendientes) || !adjuntosPendientes.length)){
+        alert("Escribí el comunicado o adjuntá al menos un archivo.");
+        return;
+    }
+
+    if(!usuarioActual || (modo !== "todos" && modo !== "personal")){
+        alert("No se pudo identificar el usuario o el tipo de comunicado.");
+        return;
+    }
+
+    if(modo === "personal" && !alumnoSeleccionado){
+        alert("Seleccioná un estudiante antes de guardar el comunicado.");
+        return;
+    }
+
+    const coincideDestino = c =>
+        c.mes === mesActual &&
+        Number(c.dia) === Number(diaActual) &&
+        c.tipo === modo &&
+        c.curso === usuarioActual.curso &&
+        (modo !== "personal" || c.alumnoId === alumnoSeleccionado.id);
+
+    const listaDestino = comunicados.filter(coincideDestino);
+    const existente = listaDestino.find(c => Number(c.hoja || 1) === Number(hojaActual));
+
+    if(!existente && listaDestino.length >= 10){
+        alert("Ya alcanzaste el máximo de 10 hojas por día.");
+        return;
+    }
+
+    const nuevo = {
+        id: existente ? existente.id : Date.now(),
+        mes: mesActual,
+        dia: diaActual,
+        tipo: modo,
+        curso: usuarioActual.curso,
+        alumnoId: modo === "personal" ? alumnoSeleccionado.id : null,
+        texto: texto,
+        adjuntos: [...adjuntosPendientes],
+        profesor: usuarioActual.nombre,
+        rolFirma: rolProfesor,
+        fechaHora: existente ? existente.fechaHora : Date.now(),
+        firmadoProfesor: true,
+        firmadoTutor: existente ? !!existente.firmadoTutor : false,
+        hoja: hojaActual
+    };
+
+    if(existente){
+        const indice = comunicados.findIndex(c => c.id === existente.id);
+        if(indice !== -1) comunicados[indice] = nuevo;
+    }else{
+        comunicados.push(nuevo);
+    }
+
+    guardarDatos();
+
+    alert(existente
+        ? "Comunicado actualizado correctamente."
+        : "Comunicado guardado correctamente."
+    );
+
+    adjuntosPendientes = [];
+    cargarHojasDia();
+}
+
+
+/* =====================================================
+   ARCHIVOS ADJUNTOS Y VISTAS PREVIAS
+===================================================== */
+
+/* =====================================================
+   FIRMA DEL TUTOR
+===================================================== */
+
+function firmarTutor(id){
+
+    const comunicado =
+        comunicados.find(
+            c => c.id === id
+        );
+
+
+    if(!comunicado){
+
+        alert(
+            "No se encontró el comunicado."
+        );
+
+        return;
+    }
+
+
+    if(comunicado.firmadoTutor){
+
+        alert(
+            "Este comunicado ya fue firmado."
+        );
+
+        return;
+    }
+
+
+    if(
+        !confirm(
+            "¿Confirmás que querés firmar este comunicado?"
+        )
+    ){
+
+        return;
+    }
+
+
+    comunicado.firmadoTutor =
+        true;
+
+
+    comunicado.fechaFirmaTutor =
+        Date.now();
+
+
+    guardarDatos();
+
+
+    alert(
+        "Comunicado firmado correctamente."
+    );
+
+
+    cargarHojasDia();
+
+}
+
+
+/* =====================================================
+   HISTORIAL DE COMUNICADOS
+===================================================== */
+
+function abrirHistorial(){
+
+    const lista =
+        obtenerComunicadosDia();
+
+
+    let html = `
+
+        <div class="historial">
+
+            <h2>
+
+                HISTORIAL DE COMUNICADOS
+
+            </h2>
+
+    `;
+
+
+    if(!lista.length){
+
+        html += `
+
+            <p>
+
+                No hay comunicados para este día.
+
+            </p>
+
+        `;
+
+    }else{
+
+        lista.forEach(c=>{
+
+            const fecha =
+                formatearFecha(
+                    c.fechaHora
+                );
+
+
+            html += `
+
+                <div class="historial-item">
+
+                    <div>
+
+                        <strong>
+
+                            Hoja ${c.hoja||1}
+
+                        </strong>
+
+                        <small>
+
+                            ${fecha.hora}
+
+                        </small>
+
+                    </div>
+
+
+                    <p>
+
+                        ${escapeHTML(
+                            c.texto
+                        )}
+
+                    </p>
+
+
+                    <small>
+
+                        ${c.firmadoTutor
+                            ? "✓ Firmado por el tutor"
+                            : "● Pendiente de firma"
+                        }
+
+                    </small>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    html += `
+
+        </div>
+
+    `;
+
+
+    const ventana =
+        document.getElementById(
+            "modalHistorial"
+        );
+
+
+    ventana.innerHTML =
+        html;
+
+    ventana.style.display =
+        "flex";
+
+}
+
+
+function cerrarHistorial(){
+
+    document.getElementById(
+        "modalHistorial"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   FIN DEL SCRIPT
+===================================================== */
+
+</script>
+
+</body>
+</html>
